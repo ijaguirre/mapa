@@ -12,6 +12,10 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
+		<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+
 	</head>
 	<body>
 
@@ -33,7 +37,7 @@
 						</div>
 						<nav>
 							<ul>
-								<li><a href="#header">Mapa 1</a></li>
+								<li><a href="#mapa1">Mapa 1</a></li>
 								<li><a href="#header">Mapa 2</a></li>
 								<li><a href="#header">Mapa 3</a></li>
 								<
@@ -47,11 +51,47 @@
 
 						<!-- Intro -->
 							<article id="mapa1">
-								<h2 class="major">Intro</h2>
-								<span class="image main"><img src="images/pic01.jpg" alt="" /></span>
-								<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. By the way, check out my <a href="#work">awesome work</a>.</p>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
+								<h2 class="major">Mapa 1: Campus San Joaquín UC</h2>
+								<div id="mapid" style="width: 550px; height: 400px;"></div>
+
+								<p><br>Esta es una cartografía muy simple, sin embargo, es muy efectiva para mostrar donde esta un determinado lugar, como un negocio, universidad, entre otros. La ventaja es que la persona puede cambiar la escala y encontrar su ubicación actual </p>
+								<p>Con algo de trabajo es posible que tambien genere la ruta óptima para llegar de un lugar a otro, integre varios lugares, geolocalice direcciones, entre otros </p>
 							</article>
+							
+							
+							<script>
+
+								var mymap = L.map('mapid').setView([-33.4975202,-70.6144487], 13);
+
+								L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+									maxZoom: 18,
+									attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+										'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+										'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+									id: 'mapbox.streets'
+								}).addTo(mymap);
+
+								L.marker([-33.4975202,-70.6144487]).addTo(mymap)
+									.bindPopup("El campus San Joaquin").openPopup();
+
+								
+
+
+								var popup = L.popup();
+
+								function onMapClick(e) {
+									popup
+										.setLatLng(e.latlng)
+										.setContent("You clicked the map at " + e.latlng.toString())
+										.openOn(mymap);
+								}
+
+								mymap.on('click', onMapClick);
+
+							</script>	
+							
+							
+							
 
 						<!-- Work -->
 							<article id="work">
